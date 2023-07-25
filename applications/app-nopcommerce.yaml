@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nopcommerce
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          custom: "true"
+  template:
+    metadata:
+      name: 'nopcommerce-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/PROMDevOps/Cybertracx-Deployment.git
+        targetRevision: "{{name}}" #Based on environment
+        path: 'cybertracx-nopcommerce'
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - values.yaml
+            - values-{{name}}.yaml
+      destination:
+        name: in-cluster
+        namespace: nopcommerce-{{name}}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
