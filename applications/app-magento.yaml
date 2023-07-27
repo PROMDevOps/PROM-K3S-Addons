@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: nopcommerce
+  name: magento
 spec:
   generators:
   - clusters:
@@ -10,13 +10,13 @@ spec:
           custom: "true"
   template:
     metadata:
-      name: 'nopcommerce-{{name}}'
+      name: 'magento-{{name}}'
     spec:
       project: "default"
       source:
         repoURL: https://github.com/PROMDevOps/Cybertracx-Deployment.git
         targetRevision: "{{name}}" #Based on environment
-        path: 'cybertracx-nopcommerce'
+        path: 'cybertracx-magento'
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
@@ -24,7 +24,7 @@ spec:
             - values-{{name}}.yaml
       destination:
         name: in-cluster
-        namespace: nopcommerce-{{name}}
+        namespace: magento-{{name}}
       syncPolicy:
         automated:
           selfHeal: true
