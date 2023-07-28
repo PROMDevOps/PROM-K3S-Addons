@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: magento
+  name: wtt
 spec:
   generators:
   - clusters:
@@ -10,13 +10,13 @@ spec:
           custom: "true"
   template:
     metadata:
-      name: 'magento-{{name}}'
+      name: 'wtt-{{name}}'
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/PROMDevOps/Cybertracx-Deployment.git
+        repoURL: https://github.com/wintech-thai/WTT-Web-Deployment.git
         targetRevision: "{{name}}" #Based on environment
-        path: 'cybertracx-magento'
+        path: 'manifests'
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
@@ -24,7 +24,7 @@ spec:
             - values-{{name}}.yaml
       destination:
         name: in-cluster
-        namespace: magento-{{name}}
+        namespace: wtt-{{name}}
       syncPolicy:
         automated:
           selfHeal: true
