@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tempo
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          custom: "true"
+  template:
+    metadata:
+      name: 'tempo-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/PROMDevOps/PROM-K3S-Addons.git
+        targetRevision: "{{name}}" #Based on environment
+        path: 'manifests/tempo'
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - values.yaml
+            - values-{{name}}.yaml
+      destination:
+        name: in-cluster
+        namespace: tempo
+      syncPolicy:
+        automated:
+          selfHeal: false
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
