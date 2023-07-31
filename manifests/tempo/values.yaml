@@ -1,1 +1,4 @@
 tempo:
+  enabled: true
+  nameOverride: tempo
+  fullnameOverride: tempo
