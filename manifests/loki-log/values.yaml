@@ -24,3 +24,17 @@ loki-stack:
       passwordKey: GRAFANA_PASSWORD
     image:
       tag: 8.5.13
+
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: Server
+          url: http://loki-log.loki-log.svc.cluster.local:3100
+
+        - name: Tempo
+          type: tempo
+          access: Server
+          url: http://tempo.tempo.svc.cluster.local:3100
