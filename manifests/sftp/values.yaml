@@ -5,6 +5,7 @@ fullnameOverride: "sftp-gcs"
 users:
   - user: demo
     bucket: prom-services-ftp
+    onlyDir: demo
 
 service:
   type: NodePort
