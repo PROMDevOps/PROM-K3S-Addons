@@ -1,0 +1,4 @@
+opensearch-operator:
+  enabled: true
+  nameOverride: opensearch-operator
+  fullnameOverride: opensearch-operator
