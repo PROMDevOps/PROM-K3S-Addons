@@ -23,6 +23,7 @@ spec:
             - values.yaml
             - values-{{name}}.yaml
             - values-tags-{{name}}.yaml
+            - values-uploader-tags-{{name}}.yaml
       destination:
         name: in-cluster
         namespace: promftp-{{name}}
