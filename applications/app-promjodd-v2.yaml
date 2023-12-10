@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: promftp
+  name: promjodd-v2
 spec:
   generators:
   - clusters:
@@ -10,23 +10,23 @@ spec:
           custom: "true"
   template:
     metadata:
-      name: 'promftp-{{name}}'
+      name: 'promjodd-v2-{{name}}'
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/PROMDevOps/PROMFTP-Deployment.git
+        repoURL: https://github.com/PROMDevOps/PROMJODD-V2-Deployment.git
         targetRevision: "{{name}}" #Based on environment
-        path: 'promftp-common'
+        path: 'promjodd-v2-common'
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
             - values.yaml
             - values-{{name}}.yaml
             - values-tags-{{name}}.yaml
-            - values-uploader-tags-{{name}}.yaml
+            - values-webportal-tags-{{name}}.yaml
       destination:
         name: in-cluster
-        namespace: promftp-{{name}}
+        namespace: promjodd-v2-{{name}}
       syncPolicy:
         automated:
           selfHeal: true
