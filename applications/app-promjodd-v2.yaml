@@ -24,6 +24,7 @@ spec:
             - values-{{name}}.yaml
             - values-tags-{{name}}.yaml
             - values-webportal-tags-{{name}}.yaml
+            - values-lprweb-tags-{{name}}.yaml
       destination:
         name: in-cluster
         namespace: promjodd-v2-{{name}}
