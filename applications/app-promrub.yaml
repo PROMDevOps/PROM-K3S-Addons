@@ -23,7 +23,7 @@ spec:
             - values.yaml
             - values-{{name}}.yaml
             - values-scb-tags-{{name}}.yaml
-            - values-portal-tags-{{name}}.yaml
+            - values-payment-tags-{{name}}.yaml
       destination:
         name: in-cluster
         namespace: promrub-{{name}}
