@@ -24,6 +24,7 @@ spec:
             - values-{{name}}.yaml
             - values-scb-tags-{{name}}.yaml
             - values-payment-tags-{{name}}.yaml
+            - values-promrub-api-tags-{{name}}.yaml
       destination:
         name: in-cluster
         namespace: promrub-{{name}}
