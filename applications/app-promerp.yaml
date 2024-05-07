@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: promerp
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          custom: "true"
+  template:
+    metadata:
+      name: 'promerp-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/PROMDevOps/ERP-Deployment.git
+        targetRevision: "{{name}}" #Based on environment
+        path: ''
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - values-{{name}}.yaml
+
+            # PostgreSQL
+            - values-files/postgresql/postgresql-00-values.yaml
+
+            # ERP-UI
+            - values-files/erp-ui/erp-ui-00-values.yaml
+            - values-files/erp-ui/erp-ui-01-{{name}}-values.yaml
+            - values-files/erp-ui/erp-ui-03-{{name}}-image-tag.yaml
+
+            # ERP-API
+            - values-files/erp-api/erp-api-00-values.yaml
+            - values-files/erp-api/erp-api-01-{{name}}-values.yaml
+            - values-files/erp-api/erp-api-03-{{name}}-image-tag.yaml
+      destination:
+        name: in-cluster
+        namespace: promerp-{{name}}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
