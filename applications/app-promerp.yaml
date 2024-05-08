@@ -20,7 +20,7 @@ spec:
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
-            - values-{{name}}.yaml
+            - values-files/values-{{name}}.yaml
 
             # PostgreSQL
             - values-files/postgresql/postgresql-00-values.yaml
