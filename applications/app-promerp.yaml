@@ -22,6 +22,9 @@ spec:
           valueFiles:
             - values-files/values-{{name}}.yaml
 
+            # Kong
+            - values-files/kong/kong-00-values.yaml
+
             # PostgreSQL
             - values-files/postgresql/postgresql-00-values.yaml
 
