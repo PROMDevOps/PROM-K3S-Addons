@@ -33,6 +33,11 @@ spec:
             - values-files/erp-ui/erp-ui-01-{{name}}-values.yaml
             - values-files/erp-ui/erp-ui-03-{{name}}-image-tag.yaml
 
+            # ERP-React-UI
+            - values-files/erp-react-ui/erp-react-ui-00-values.yaml
+            - values-files/erp-react-ui/erp-react-ui-01-{{name}}-values.yaml
+            - values-files/erp-react-ui/erp-react-ui-03-{{name}}-image-tag.yaml
+
             # ERP-API
             - values-files/erp-api/erp-api-00-values.yaml
             - values-files/erp-api/erp-api-01-{{name}}-values.yaml
