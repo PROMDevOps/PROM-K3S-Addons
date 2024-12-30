@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prom
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          custom: "true"
+  template:
+    metadata:
+      name: 'prom-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/PROMDevOps/PROM-Deployment.git
+        targetRevision: "{{name}}" #Based on environment
+        path: '.'
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - values-files/values-{{name}}.yaml
+
+            # Prom-Web-Portal
+            - values-files/prom-web-portal/prom-web-portal-00-values.yaml
+            - values-files/prom-web-portal/prom-web-portal-01-{{name}}-values.yaml
+            - values-files/prom-web-portal/prom-web-portal-03-{{name}}-image-tag.yaml
+      destination:
+        name: in-cluster
+        namespace: prom-{{name}}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
