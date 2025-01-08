@@ -28,7 +28,7 @@ spec:
         matchers:
           - matchType: =~
             name: alertname
-            value: 'KubeControllerManagerDown|KubeProxyDown|KubeSchedulerDown|NodeClockNotSynchronising'
+            value: 'KubeControllerManagerDown|KubeProxyDown|KubeSchedulerDown|NodeClockNotSynchronising|InfoInhibitor'
         groupInterval: 5m
         groupWait: 30s
         receiver: null-notifications
