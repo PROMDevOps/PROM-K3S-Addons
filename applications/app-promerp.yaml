@@ -42,6 +42,16 @@ spec:
             - values-files/erp-api/erp-api-00-values.yaml
             - values-files/erp-api/erp-api-01-{{name}}-values.yaml
             - values-files/erp-api/erp-api-03-{{name}}-image-tag.yaml
+
+            # ERP-Account-UI
+            - values-files/erp-account-ui/erp-account-ui-00-values.yaml
+            - values-files/erp-account-ui/erp-account-ui-01-{{name}}-values.yaml
+            - values-files/erp-account-ui/erp-account-ui-03-{{name}}-image-tag.yaml
+
+            # ERP-Account-API
+            - values-files/erp-account-api/erp-account-api-00-values.yaml
+            - values-files/erp-account-api/erp-account-api-01-{{name}}-values.yaml
+            - values-files/erp-account-api/erp-account-api-03-{{name}}-image-tag.yaml
       destination:
         name: in-cluster
         namespace: promerp-{{name}}
