@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: promid-v2
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          custom: "true"
+  template:
+    metadata:
+      name: 'promid-v2-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/PROMDevOps/PROMID-Deployment.git
+        targetRevision: "{{name}}" #Based on environment
+        path: 'promid-v2'
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - values-files/values-{{name}}.yaml
+
+            # PostgreSQL
+            - values-files/postgresql/postgresql-00-values.yaml
+
+            # Admin-Prom-UI
+            - values-files/admin-prom-ui/admin-prom-ui-00-values.yaml
+            - values-files/admin-prom-ui/admin-prom-ui-01-{{name}}-values.yaml
+            - values-files/admin-prom-ui/admin-prom-ui-03-{{name}}-image-tag.yaml
+
+            # Signin-Prom-UI
+            - values-files/signin-prom-ui/signin-prom-ui-00-values.yaml
+            - values-files/signin-prom-ui/signin-prom-ui-01-{{name}}-values.yaml
+            - values-files/signin-prom-ui/signin-prom-ui-03-{{name}}-image-tag.yaml
+
+            # App-API-Service
+            - values-files/app-api-service/app-api-service-00-values.yaml
+            - values-files/app-api-service/app-api-service-01-{{name}}-values.yaml
+            - values-files/app-api-service/app-api-service-03-{{name}}-image-tag.yaml
+
+            # SSO-API-Service
+            - values-files/sso-api-service/sso-api-service-00-values.yaml
+            - values-files/sso-api-service/sso-api-service-01-{{name}}-values.yaml
+            - values-files/sso-api-service/sso-api-service-03-{{name}}-image-tag.yaml
+      destination:
+        name: in-cluster
+        namespace: promid-v2-{{name}}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
